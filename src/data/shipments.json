@@ -1,0 +1,92 @@
+[
+  {
+    "id": "SHP001",
+    "origin": "Jakarta",
+    "destination": "Surabaya",
+    "route": "Jakarta → Surabaya",
+    "vehicle_type": "Truck",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP002",
+    "origin": "Bandung",
+    "destination": "Medan",
+    "route": "Bandung → Medan",
+    "vehicle_type": "Van",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP003",
+    "origin": "Semarang",
+    "destination": "Yogyakarta",
+    "route": "Semarang → Yogyakarta",
+    "vehicle_type": "Pickup",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP004",
+    "origin": "Depok",
+    "destination": "Bogor",
+    "route": "Depok → Bogor",
+    "vehicle_type": "Truck",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP005",
+    "origin": "Bekasi",
+    "destination": "Cirebon",
+    "route": "Bekasi → Cirebon",
+    "vehicle_type": "Van",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP006",
+    "origin": "Tangerang",
+    "destination": "Serang",
+    "route": "Tangerang → Serang",
+    "vehicle_type": "Pickup",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP007",
+    "origin": "Malang",
+    "destination": "Bali",
+    "route": "Malang → Bali",
+    "vehicle_type": "Truck",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP008",
+    "origin": "Padang",
+    "destination": "Pekanbaru",
+    "route": "Padang → Pekanbaru",
+    "vehicle_type": "Van",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP009",
+    "origin": "Palembang",
+    "destination": "Lampung",
+    "route": "Palembang → Lampung",
+    "vehicle_type": "Pickup",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP010",
+    "origin": "Makassar",
+    "destination": "Manado",
+    "route": "Makassar → Manado",
+    "vehicle_type": "Truck",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  }
+]
