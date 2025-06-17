@@ -38,19 +38,21 @@ Aplikasi frontend untuk melacak dan mengelola data pengiriman barang menggunakan
 - Data shipment dan transporter menggunakan **data statis lokal** (`shipments.json`) dan disimpan di **Pinia Store**.
 - Perubahan status pengiriman hanya terjadi saat transporter di-assign (bukan real-time socket).
 - Validasi form menggunakan **VeeValidate + Zod**, dan notifikasi menggunakan **vue-sonner**.
+- Efek Skelton dibuat menggunakan **ShadCN Vue** agar ada efek loading sebelum data dimuat.
 - UI dibangun menggunakan **Tailwind CSS** dan komponen dari **ShadCN Vue**.
 
 ---
 
 ## 📦 Library yang Digunakan
 
-- Vue 3  
+- Vue 3
 - Vue Router
-- Vitest  
-- Pinia  
-- Tailwind CSS  
-- VeeValidate  
-- Zod  
-- Vue Sonner  
-- ShadCN Vue UI  
+- Vitest
+- Pinia
+- Tailwind CSS
+- VeeValidate
+- Zod
+- Vue Sonner
+- ShadCN Vue UI
+- Skelton loading
 - Class-variance-authority, clsx, tailwind-merge
