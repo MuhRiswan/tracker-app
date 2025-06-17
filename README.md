@@ -1,6 +1,56 @@
-# Vue 3 + TypeScript + Vite
+# 🚚 Transport Shipment Tracker
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Aplikasi frontend untuk melacak dan mengelola data pengiriman barang menggunakan **Vue 3**, **Pinia**, dan **Tailwind CSS**. Fitur utama meliputi tampilan daftar pengiriman, detail pengiriman, dan penugasan transporter.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
-# tracker-app
+---
+
+## ▶️ Cara Menjalankan Secara Lokal
+
+1. **Clone repositori:**
+
+   ```bash
+   git clone https://github.com/username/shipment-tracker.git
+   cd shipment-tracker
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Jalankan aplikasi:**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Jalankan unit test (opsional):**
+
+   ```bash
+   npm run test
+   ```
+
+---
+
+## 📌 Catatan dan Asumsi
+
+- Data shipment dan transporter menggunakan **data statis lokal** (`shipments.json`) dan disimpan di **Pinia Store**.
+- Perubahan status pengiriman hanya terjadi saat transporter di-assign (bukan real-time socket).
+- Validasi form menggunakan **VeeValidate + Zod**, dan notifikasi menggunakan **vue-sonner**.
+- UI dibangun menggunakan **Tailwind CSS** dan komponen dari **ShadCN Vue**.
+
+---
+
+## 📦 Library yang Digunakan
+
+- Vue 3  
+- Vue Router
+- Vitest  
+- Pinia  
+- Tailwind CSS  
+- VeeValidate  
+- Zod  
+- Vue Sonner  
+- ShadCN Vue UI  
+- Class-variance-authority, clsx, tailwind-merge
