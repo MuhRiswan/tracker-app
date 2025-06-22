@@ -88,5 +88,59 @@
     "vehicle_type": "Truck",
     "status": "Not Assigned",
     "assigned_transporter": null
+  },
+  {
+    "id": "SHP011",
+    "origin": "Surabaya",
+    "destination": "Bandung",
+    "route": "Surabaya → Bandung",
+    "vehicle_type": "Van",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP012",
+    "origin": "Yogyakarta",
+    "destination": "Semarang",
+    "route": "Yogyakarta → Semarang",
+    "vehicle_type": "Pickup",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP013",
+    "origin": "Bogor",
+    "destination": "Depok",
+    "route": "Bogor → Depok",
+    "vehicle_type": "Truck",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP014",
+    "origin": "Cirebon",
+    "destination": "Bekasi",
+    "route": "Cirebon → Bekasi",
+    "vehicle_type": "Van",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP015",
+    "origin": "Serang",
+    "destination": "Tangerang",
+    "route": "Serang → Tangerang",
+    "vehicle_type": "Pickup",
+    "status": "Not Assigned",
+    "assigned_transporter": null
+  },
+  {
+    "id": "SHP016",
+    "origin": "Bali",
+    "destination": "Malang",
+    "route": "Bali → Malang",
+    "vehicle_type": "Truck",
+    "status": "Not Assigned",
+    "assigned_transporter": null
   }
 ]

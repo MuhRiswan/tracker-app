@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { z } from "zod";
 import { useForm } from "vee-validate";
@@ -10,9 +10,19 @@ import { toTypedSchema } from "@vee-validate/zod";
 import { toast } from "vue-sonner";
 import { useShipment } from "@/composables/useShipment";
 
-const { shipments, transporters } = useShipment();
+const { shipments, transporters, fetchShipments } = useShipment();
 const route = useRoute();
 const shipmentId = route.params.id as string;
+const isLoading = ref(true);
+const role = ref(localStorage.getItem("role"));
+
+onMounted(() => {
+  if (shipments.value.length === 0) {
+    fetchShipments();
+  }
+  isLoading.value = false;
+});
+
 const shipment = computed(() => shipments.value.find((s) => s.id === shipmentId));
 
 const formSchema = toTypedSchema(
@@ -48,15 +58,18 @@ const onSubmit = handleSubmit((values) => {
 
 <template>
   <div class="p-4">
-    <router-link to="/" class="text-gray-600 hover:text-gray-800 hover:underline">← Back to Shipments</router-link>
-    <div v-if="shipment" class="mt-4 bg-white rounded-xl shadow border border-gray-200 p-6">
+    <router-link to="/" class="text-gray-600 hover:text-gray-800 hover:underline"> ← Back to Shipments </router-link>
+
+    <div v-if="isLoading" class="mt-6 text-gray-500">Loading shipment...</div>
+
+    <div v-else-if="shipment" class="mt-4 bg-white rounded-xl shadow border border-gray-200 p-6">
       <h2 class="text-xl font-bold mb-2">Shipment Detail: {{ shipment.id }}</h2>
       <div class="text-gray-700 mb-1">Route: {{ shipment.route }}</div>
       <div class="text-gray-700 mb-1">Vehicle Type: {{ shipment.vehicle_type }}</div>
       <div class="text-gray-700 mb-4">Status: {{ shipment.status }}</div>
       <div v-if="shipment.assigned_transporter" class="text-gray-700 mb-1">Assigned Transporter: {{ shipment.assigned_transporter }}</div>
 
-      <form v-if="shipment.status !== 'Assigned'" :validation-schema="formSchema" @submit="onSubmit" class="space-y-2 mt-5">
+      <form v-if="shipment.status !== 'Assigned' && role === 'admin'" :validation-schema="formSchema" @submit="onSubmit" class="space-y-2 mt-5">
         <FormField v-slot="{ componentField }" name="transporter">
           <FormLabel>Assign Transporter</FormLabel>
           <Select v-bind="componentField">
@@ -75,6 +88,7 @@ const onSubmit = handleSubmit((values) => {
         <Button class="cursor-pointer" type="submit">Assign</Button>
       </form>
     </div>
+
     <div v-else class="text-gray-600 mt-6">Shipment not found.</div>
   </div>
 </template>

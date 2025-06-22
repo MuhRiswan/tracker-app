@@ -2,15 +2,22 @@
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useShipment } from "@/composables/useShipment";
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-vue-next";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { useRouter } from "vue-router";
+import { Button } from "./ui/button";
+import { toast } from "vue-sonner";
 
+const router = useRouter();
+const role = ref(localStorage.getItem("role"));
 const { shipments, fetchShipments, toggleRandomStatus } = useShipment();
 const isLoading = ref(true);
 const searchTerm = ref("");
 const currentPage = ref(1);
-const itemsPerPage = 6;
+const itemsPerPageOptions = [1, 5, 10, 50];
+const itemsPerPage = ref(5);
 
 const filteredShipments = computed(() => {
   const query = searchTerm.value.toLowerCase();
@@ -20,13 +27,13 @@ const filteredShipments = computed(() => {
 });
 
 const paginatedShipments = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
   return filteredShipments.value.slice(start, end);
 });
 
 const totalPages = computed(() => {
-  return Math.ceil(filteredShipments.value.length / itemsPerPage);
+  return Math.ceil(filteredShipments.value.length / itemsPerPage.value);
 });
 
 // Mereset halamannya ke page 1 ketika searchTerm berubah
@@ -35,6 +42,13 @@ watch(searchTerm, () => {
 });
 
 let intervalId: number | NodeJS.Timeout;
+
+const handleLogout = () => {
+  console.log("tes");
+  localStorage.removeItem("role");
+  router.push("/login");
+  return toast.success("Logout successful.", { duration: 1500 });
+};
 
 onMounted(() => {
   fetchShipments();
@@ -54,12 +68,28 @@ onUnmounted(() => {
 
 <template>
   <div class="p-4">
-    <h1 class="text-2xl font-bold mb-4">🚚 Shipment List</h1>
-    <div class="mb-4 relative items-center w-full max-w-md">
-      <Input v-model="searchTerm" id="search" type="search" placeholder="Search by origin, destination, or transporter" class="py-0 pl-10 h-9" />
-      <span class="absolute inset-y-0 flex items-center justify-center px-2 py-0 start-0">
-        <Search class="h-4 text-muted-foreground" />
-      </span>
+    <div class="w-full flex justify-between">
+      <h1 class="text-2xl font-bold mb-4">🚚 Shipment List - {{ role }}</h1>
+      <Button @click="handleLogout" variant="destructive" class="cursor-pointer">Logout</Button>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+      <div class="relative items-center w-full max-w-md">
+        <Input v-model="searchTerm" id="search" type="search" placeholder="Search by origin, destination, or transporter" class="py-0 pl-10 h-9" />
+        <span class="absolute inset-y-0 flex items-center justify-center px-2 py-0 start-0">
+          <Search class="h-4 text-muted-foreground" />
+        </span>
+      </div>
+
+      <div class="w-full">
+        <Select v-model="itemsPerPage">
+          <SelectTrigger>
+            <SelectValue :placeholder="`${itemsPerPage}`" />
+          </SelectTrigger>
+          <SelectContent class="max-w-14">
+            <SelectItem class="w-fit" v-for="option in itemsPerPageOptions" :key="option" :value="option"> {{ option }} </SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -91,14 +121,16 @@ onUnmounted(() => {
     </div>
 
     <div class="mt-6" v-if="totalPages > 1">
-      <Pagination v-slot="" :total="filteredShipments.length" :items-per-page="itemsPerPage" :default-page="currentPage" @update:page="(p) => (currentPage = p)">
+      <Pagination :total="filteredShipments.length" :items-per-page="itemsPerPage" :default-page="currentPage" @update:page="(p) => (currentPage = p)">
         <PaginationContent v-slot="{ items }">
           <PaginationPrevious />
+          <PaginationEllipsis v-if="totalPages > 5 && currentPage > 3" />
           <template v-for="(item, index) in items" :key="index">
             <PaginationItem v-if="item.type === 'page'" :value="item.value" :is-active="item.value === currentPage">
               {{ item.value }}
             </PaginationItem>
           </template>
+          <PaginationEllipsis v-if="totalPages > 5 && currentPage < totalPages - 2" />
           <PaginationNext />
         </PaginationContent>
       </Pagination>
