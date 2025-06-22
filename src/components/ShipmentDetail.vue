@@ -2,18 +2,18 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { z } from "zod";
-import { useShipmentStore } from "@/store/shipmentStore";
 import { useForm } from "vee-validate";
 import { FormField, FormLabel, FormMessage } from "./ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Button } from "./ui/button";
 import { toTypedSchema } from "@vee-validate/zod";
 import { toast } from "vue-sonner";
+import { useShipment } from "@/composables/useShipment";
 
-const store = useShipmentStore();
+const { shipments, transporters } = useShipment();
 const route = useRoute();
 const shipmentId = route.params.id as string;
-const shipment = computed(() => store.shipments.find((s) => s.id === shipmentId));
+const shipment = computed(() => shipments.value.find((s) => s.id === shipmentId));
 
 const formSchema = toTypedSchema(
   z.object({
@@ -31,26 +31,20 @@ const onSubmit = handleSubmit((values) => {
     return;
   }
 
-  const index = store.shipments.findIndex((s) => s.id === shipmentId);
+  const index = shipments.value.findIndex((s) => s.id === shipmentId);
   if (index !== -1) {
-    if (store.shipments[index].assigned_transporter === values.transporter) {
+    if (shipments.value[index].assigned_transporter === values.transporter) {
       toast.error("Transporter is already assigned.");
       return;
     }
-    store.shipments[index].assigned_transporter = values.transporter;
-    store.shipments[index].status = "Assigned";
+    shipments.value[index].assigned_transporter = values.transporter;
+    shipments.value[index].status = "Assigned";
     toast.success("Transporter assigned successfully.");
   } else {
     toast.error("Shipment not found.");
   }
 });
 </script>
-
-<style scoped>
-body {
-  background-color: #f9fafb;
-}
-</style>
 
 <template>
   <div class="p-4">
@@ -70,7 +64,7 @@ body {
               <SelectValue placeholder="Select transporter" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem v-for="transporter in store.transporters" :key="transporter.id" :value="transporter.name">
+              <SelectItem v-for="transporter in transporters" :key="transporter.id" :value="transporter.name">
                 {{ transporter.name }}
               </SelectItem>
             </SelectContent>
